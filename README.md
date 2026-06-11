@@ -24,28 +24,37 @@ instantly without kicking off a ~40-minute retrain.
 ## Layout
 
 ```
-scripts/transformer.py    # model + training loop
-notebooks/interp_1.ipynb  # attention-pattern analysis
-input.txt                 # tiny-shakespeare corpus
-models/                   # weights + checkpoints — gitignored (see below)
-Research Report.pdf       # write-up
+scripts/transformer.py     # char model + training loop
+scripts/transformer_bpe.py # same model, BPE tokenizer (induction_2)
+notebooks/interp_1.ipynb   # attention-pattern analysis
+input.txt                  # tiny-shakespeare corpus
+models/char/               # char-model weights + checkpoints — gitignored (see below)
+models/bpe/                # BPE-model weights + checkpoints (induction_2) — gitignored
+Research Report.pdf        # write-up
 ```
 
 ## Weights aren't in the repo
 
-`models/` is gitignored: `model.pt` (best-val weights), `meta.pt` (config +
-vocab), and 28 `ckpt_*.pt` training snapshots total ~1.4 GB. Regenerate them
-from scratch:
+`models/` is gitignored. The char model lives in `models/char/`: `model.pt`
+(best-val weights), `meta.pt` (config + vocab), and 28 `ckpt_*.pt` training
+snapshots, ~1.4 GB. Regenerate from scratch:
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install torch matplotlib
-python scripts/transformer.py        # ~40 min on Apple-silicon (MPS)
+python scripts/transformer.py        # char model -> models/char/, ~40 min on MPS
 ```
 
 This writes `meta.pt` once, `model.pt` whenever validation loss improves, and a
 checkpoint per snapshot step (dense early, then every 250 steps) — the series
-used to study how circuits form over training.
+used to study how circuits form over training. The `induction_2` BPE variant is
+the same training with one variable changed (char vocab -> trained byte-level
+BPE), writing to `models/bpe/`:
+
+```bash
+pip install tokenizers
+python scripts/transformer_bpe.py    # BPE model -> models/bpe/
+```
 
 ## Findings so far
 

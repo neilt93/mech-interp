@@ -220,7 +220,7 @@ if __name__ == '__main__':
 
     # developmental-interp checkpoints: snapshot weights through training so we can
     # load the series back later and watch circuits form. models/ is gitignored (weights are large).
-    ckpt_dir = os.path.join(ROOT, 'models')
+    ckpt_dir = os.path.join(ROOT, 'models', 'char')
     os.makedirs(ckpt_dir, exist_ok=True)
     # save run config + vocab once so any snapshot can be rebuilt and decoded without this file
     torch.save({
@@ -251,7 +251,7 @@ if __name__ == '__main__':
             if losses['val'] < best_val_loss:
                 best_val_loss = losses['val']
                 torch.save(model.state_dict(), os.path.join(ckpt_dir, 'model.pt'))
-                print(f"  new best val loss {best_val_loss:.4f} -> saved models/model.pt")
+                print(f"  new best val loss {best_val_loss:.4f} -> saved models/char/model.pt")
 
         # developmental-interp snapshot: dense early (checkpoint_steps), then every
         # checkpoint_interval, plus the final step. independent of best-val. iter padded for sort order.
@@ -269,7 +269,7 @@ if __name__ == '__main__':
 
     train_time = time.time() - train_start
     print(f"\nTraining done: {max_iters} steps in {train_time:.1f}s ({train_time / max_iters * 1000:.1f} ms/step avg)")
-    print(f"Best val loss: {best_val_loss:.4f} (weights saved to models/model.pt)")
+    print(f"Best val loss: {best_val_loss:.4f} (weights saved to models/char/model.pt)")
 
     # reload the best-val checkpoint so we generate from the best weights, not the final overfit ones
     model.load_state_dict(torch.load(os.path.join(ckpt_dir, 'model.pt')))
