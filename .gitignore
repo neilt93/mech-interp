@@ -20,6 +20,10 @@ __pycache__/
 *.npz
 artifacts/
 
+# Tokenized corpora (large, regenerable via scripts/prepare_vast_data.py)
+*.bin
+data/
+
 # OS / editor
 .DS_Store
 .vscode/
