@@ -77,6 +77,7 @@ watch the induction curve, and find the offset-diagonal head in a repeated-seque
 ### Notes / gotchas
 - **`bpe_vocab_size` and `block_size` must match** between `prepare_vast_data.py` and `transformer_vast.py`
   (they're duplicated as plain constants; the prep script writes them into `meta.pt`).
-- `prepare_vast_data.py` is idempotent only by file presence — delete `data/vast/` to force a rebuild.
+- `prepare_vast_data.py` overwrites `data/vast/*.bin` on every run. After a `--smoke` test, **re-run it without `--smoke`** before training — otherwise you'd train on the ~1MB smoke corpus.
+- Verified end-to-end locally: `Skylion007/openwebtext` streams, the smoke run round-trips to real English, and `transformer_vast` imports against the produced `meta.pt`.
 - OOM is the #1 risk. Start at `batch_size=8, grad_accum_steps=8`; raise `batch_size` only with headroom.
 - bf16 autocast is on for CUDA automatically (no-op on the Mac, so the file still imports for notebooks).

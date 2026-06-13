@@ -22,7 +22,7 @@ from tokenizers import Tokenizer, models, trainers, pre_tokenizers, decoders
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # ── corpus + tokenizer config (keep block_size / vocab in sync with transformer_vast.py) ──
-DATASET = 'openwebtext'   # streamed; swap to another HF id only if you also change TEXT_COLUMN
+DATASET = 'Skylion007/openwebtext'  # streamed; the canonical OWT mirror (bare 'openwebtext' no longer resolves)
 DATASET_SPLIT = 'train'
 TEXT_COLUMN = 'text'
 bpe_vocab_size = 8192     # must match transformer_vast.py and stay < 65536 (uint16 .bin)
