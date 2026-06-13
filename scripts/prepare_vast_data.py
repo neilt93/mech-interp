@@ -143,3 +143,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+    # HF streaming spawns background prefetch threads that keep retrying the next shard
+    # after our work is done, hanging the process. The bins are flushed by main() before
+    # this point, so force a clean exit rather than waste (paid) time waiting on them.
+    os._exit(0)

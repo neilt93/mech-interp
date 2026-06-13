@@ -36,9 +36,11 @@ This streams OpenWebText (never downloads the full ~40GB), trains the BPE tokeni
 - Pick a 4090 / 24GB image with PyTorch + CUDA. Budget extra wall-clock for first-time provisioning.
 - Get the repo + the prepared data + a venv onto it, e.g.:
 ```bash
-rsync -avz --exclude models/char --exclude models/bpe \
-  ./ user@<vast-host>:~/mech-interp/        # includes data/vast/*.bin and models/vast/meta.pt
-# on the box:
+rsync -avz --exclude .venv --exclude .git --exclude models/char --exclude models/bpe \
+  ./ user@<vast-host>:~/mech-interp/        # sends scripts + data/vast/*.bin + models/vast/meta.pt
+# NOTE: excluding .venv is required — it's macOS binaries, useless (and ~GBs) on the Linux box.
+# on the box, make a fresh env:
+python3 -m venv .venv && source .venv/bin/activate
 pip install torch numpy datasets tokenizers
 ```
 (You can instead re-run `prepare_vast_data.py` on the box, but copying the bins skips re-tokenizing.)
