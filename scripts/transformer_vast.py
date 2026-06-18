@@ -13,7 +13,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # ── transformer_vast ──────────────────────────────────────────────────────────
 # transformer_bpe.py scaled to GPT-2-small on real web text, to train long enough that
 # an actual induction head forms — so the EXISTING induction-score + heatmap tools
-# (notebooks/interp_1.ipynb, notebooks/Interp_2.ipynb) find one (char + small-BPE runs
+# (notebooks/Interp_1.ipynb, notebooks/Interp_2.ipynb) find one (char + small-BPE runs
 # both read induction ≈ chance). Target Vast.ai single 4090 (24GB), an overnight-ish run.
 #
 # This is training INFRASTRUCTURE only — no analysis/interp code. The model classes are

@@ -1,7 +1,7 @@
 # RUN.md — scaled training to grow induction heads (`transformer_vast.py`)
 
 Goal: train a GPT-2-small-scale model on real web text until **induction heads form**, then
-find them with the existing `notebooks/interp_1.ipynb` / `notebooks/Interp_2.ipynb` tools.
+find them with the existing `notebooks/Interp_1.ipynb` / `notebooks/Interp_2.ipynb` tools.
 The char and small-BPE runs both read induction ≈ chance; this run is the demonstration that
 it lifts off the floor. **The science (the sweep, the heatmaps, finding the head) is done by
 hand in the notebooks — not by this rig.**
